@@ -1,0 +1,10 @@
+# python
+__pycache__/
+
+# compiled c shared libraries
+*.so
+
+# vim
+*.swn
+*.swo
+*.swp
