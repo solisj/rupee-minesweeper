@@ -43,7 +43,11 @@ The game ends after either the time runs out, or Link digs up a bomb.
 
 # Version History
 
-This is version 0.0.1.
+This is version 0.0.2.
+
+Removed unnecessary import and cleaned some comments.
+
+Version 0.0.1.
 
 First version with public source code. Allows user to edit a board, with the
 intent of mimicking an actual board in the game. Then, the program will tell the
