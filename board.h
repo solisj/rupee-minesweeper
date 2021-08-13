@@ -21,8 +21,6 @@ struct coordinate {
     int y;
 };
 
-long factorial(long n);
-
 long combinations(long n, long k);
 
 void getknownarea(size_t width, size_t height, rupee board[height][width], bool knownarea[height][width]);
@@ -44,8 +42,6 @@ int getnumbadrupees(rupee adjacent[MAXNUMADJACENTRUPEES], int numadjacent);
 int getnumunknownrupees(rupee adjacent[MAXNUMADJACENTRUPEES], int numadjacent);
 
 void getbadnumbers(size_t width, size_t height, rupee board[height][width], int numbad, int maxnumbad, int minbadlocation, long outputnumbers[height][width]);
-
-void getbadnumbers2(size_t width, size_t height, rupee board[height][width], int numbad, int maxnumbad, int minbadlocation, long outputnumbers[height][width]);
 
 long summatrixtiles(size_t width, size_t height, long matrix[height][width]);
 

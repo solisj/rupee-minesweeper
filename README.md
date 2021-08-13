@@ -43,7 +43,11 @@ The game ends after either the time runs out, or Link digs up a bomb.
 
 # Version History
 
-This is version 0.0.2.
+This is version 0.0.3.
+
+Removed unused functions/macros.
+
+Version 0.0.2.
 
 Removed unnecessary import and cleaned some comments.
 
