@@ -1,11 +1,9 @@
-import Board
 import FancyText
 
 import sys
 import time
 import random
 import ctypes
-import glob #TODO ??
 
 #pygame
 import pygame
@@ -21,10 +19,10 @@ MAXNUMADJACENTRUPEES = 16
 libfile = "./board.so"
 #libfile = glob.glob("build/*/board*.so")[0]
 boardlib = ctypes.CDLL(libfile)
-#boardlib.getbadnumbers.restype = ctypes.c_int #TODO is default restype void?
+#boardlib.getbadnumbers.restype = ctypes.c_int #default restype is fine b/c void
 boardlib.getbadnumbers.argtypes = [ctypes.c_size_t, #width
                                    ctypes.c_size_t, #height
-                                   (ctypes.c_int * width) * height, #board array TODO how to deal with enum?
+                                   (ctypes.c_int * width) * height, #board array
                                    ctypes.c_int, #numbad
                                    ctypes.c_int, #maxnumbad
                                    ctypes.c_int, #minbadlocation
@@ -46,8 +44,6 @@ Blue    = 3 # worth 5; 1 or 2 adjacent rupees
 Red     = 4 # worth 20; 3 or 4 adjacent rupees
 Silver  = 5 # worth 100; 5 or 6 adjacent rupees
 Gold    = 6 # worth 300; 7 or 8 adjacent rupees
-#Bomb    = 7 # ends game
-#Rupoor  = 8 # worth min(-10, RUPEES), where RUPEES is current score
 Bad     = 9 # either Bomb or Rupoor
 
 #colors
