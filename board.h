@@ -1,9 +1,5 @@
 #include <stdbool.h>
 
-#define MAXNUMADJACENTRUPEES 8
-
-int add_ints(int int1, int int2);
-
 typedef enum {Good    = 0, // any of the various colorful rupee w/ worth > 0
               Unknown = 1,
               Green   = 2, // worth 1; no adjacent rupees
@@ -11,8 +7,6 @@ typedef enum {Good    = 0, // any of the various colorful rupee w/ worth > 0
               Red     = 4, // worth 20; 3 or 4 adjacent rupees
               Silver  = 5, // worth 100; 5 or 6 adjacent rupees
               Gold    = 6, // worth 300; 7 or 8 adjacent rupees
-              //Bomb    = 7, // ends game
-              //Rupoor  = 8, // worth min(-10, RUPEES), where RUPEES is current score
               Bad     = 9  //either Bomb or Rupoor
              } rupee;
 
@@ -36,10 +30,6 @@ void getboardunknownrupees(size_t width, size_t height, rupee board[height][widt
 bool validaterupee(size_t width, size_t height, rupee board[height][width], int x, int y);
 
 bool validateneighbors(size_t width, size_t height, rupee board[height][width], int x, int y);
-
-int getnumbadrupees(rupee adjacent[MAXNUMADJACENTRUPEES], int numadjacent);
-
-int getnumunknownrupees(rupee adjacent[MAXNUMADJACENTRUPEES], int numadjacent);
 
 void getbadnumbers(size_t width, size_t height, rupee board[height][width], int numbad, int maxnumbad, int minbadlocation, long outputnumbers[height][width]);
 

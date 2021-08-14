@@ -293,35 +293,6 @@ bool validateneighbors(size_t width, size_t height, rupee board[height][width], 
     return valid;
 }
 
-int getnumbadrupees(rupee adjacent[MAXNUMADJACENTRUPEES], int numadjacent) {
-    /* Given an array of rupees, get the total number of
-     * bombs, rupoors, or bad rupees.
-     */
-    int numbad = 0;
-    for (int i = 0; i < numadjacent; i++) {
-        rupee currentrupee = adjacent[i];
-        if (//currentrupee == Bomb ||
-            //currentrupee == Rupoor ||
-            currentrupee == Bad) {
-            numbad++;
-        }
-    }
-    return numbad;
-}
-
-int getnumunknownrupees(rupee adjacent[MAXNUMADJACENTRUPEES], int numadjacent) {
-    /* Given an array of rupees, get the total number of
-     * unknown rupees.
-     */
-    int numunknown = 0;
-    for (int i = 0; i < numadjacent; i++) {
-        if (adjacent[i] == Unknown) {
-            numunknown++;
-        }
-    }
-    return numunknown;
-}
-
 void getbadnumbers2(size_t width, size_t height, rupee board[height][width], int numbad, int maxnumbad, int minbadlocation, long outputnumbers[height][width]) {
     /* Given a board and the current number of bad
      * rupees as well as the maximum possible number

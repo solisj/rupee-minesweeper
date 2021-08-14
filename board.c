@@ -17,85 +17,6 @@ long combinations(long n, long k) {
     return product;
 }
 
-void getknownbox(size_t width, size_t height, rupee board[height][width], struct coordinate *topleft, struct coordinate *bottomright) {
-    /* Given a game board, get the smallest
-     * box that contains only known rupees.
-     * Additionally, all rupees in this box
-     * must either only be adjacent to other
-     * rupees in the box, or be unknown rupees.
-     *
-     * Assumes board has at least one known rupee.
-     */
-    size_t i; size_t j;
-
-    bool emptyrows[height];
-    for (j = 0; j < height; j++)
-        emptyrows[j] = true;
-    bool emptycolumns[width];
-    for (i = 0; i < width; i++)
-        emptycolumns[i] = true;
-
-    for (size_t j = 0; j < height; j++) {
-        for (size_t i = 0; i < width; i++) {
-            if (board[j][i] != Unknown) {
-                emptyrows[j] = false;
-                emptycolumns[i] = false;
-            }
-        }
-    }
-
-    //get top
-    int top = -1;
-    for (j = 0; j < height; j++) {
-        if (emptyrows[j]) {
-            top++;
-        } else {
-            break;
-        }
-    }
-    top = (top < 0) ? 0 : top;
-
-    //get bottom
-    int bottom = height;
-    for (j = height - 1; j >= 0; j--) {
-        if (emptyrows[j]) {
-            bottom--;
-        } else {
-            break;
-        }
-    }
-    bottom = (bottom >= height) ? height - 1 : bottom;
-
-    //get left
-    int left = -1;
-    for (i = 0; i < width; i++) {
-        if (emptycolumns[i]) {
-            left++;
-        } else {
-            break;
-        }
-    }
-    left = (left < 0) ? 0 : left;
-
-    //get right
-    int right = width;
-    for (i = width - 1; i >= 0; i--) {
-        if (emptycolumns[i]) {
-            right--;
-        } else {
-            break;
-        }
-    }
-    right = (right >= width) ? width - 1 : right;
-
-    //inject values into coordinate structs
-    topleft->x = left;
-    topleft->y = top;
-
-    bottomright->x = right;
-    bottomright->y = bottom;
-}
-
 void getknownarea(size_t width, size_t height, rupee board[height][width], bool knownarea[height][width]) {
     /* Given a board, mark off areas as "known"
      * which have at least one known neighbor (or
@@ -116,15 +37,12 @@ void getknownarea(size_t width, size_t height, rupee board[height][width], bool 
                 }
             }
             knownarea[j][i] = known;
-            //printf(known?"X":"O");
         }
-        //printf("\n");
     }
-    //printf("\n");
 }
 
 bool validateboard(size_t width, size_t height, rupee board[height][width]) {
-    /* Checks if the current state board is valid in a real game.
+    /* Checks if board is valid in a real game.
      * Returns true if valid, false otherwise.
      */
     bool valid = true;
@@ -174,7 +92,10 @@ int getboardnumunknownrupees(size_t width, size_t height, rupee board[height][wi
     return numunknownrupees;
 }
 
-void getboardunknownrupees(size_t width, size_t height, rupee board[height][width], bool unknownrupees[height][width]) {
+void getboardunknownrupees(size_t width,
+                           size_t height,
+                           rupee board[height][width],
+                           bool unknownrupees[height][width]) {
     /* Get the locations of the unknown rupees
      * on the board; marking true on unknownrupees
      * where there is an unknown rupee, and
@@ -187,7 +108,11 @@ void getboardunknownrupees(size_t width, size_t height, rupee board[height][widt
     }
 }
 
-bool validaterupee(size_t width, size_t height, rupee board[height][width], int x, int y) {
+bool validaterupee(size_t width,
+                   size_t height,
+                   rupee board[height][width],
+                   int x,
+                   int y) {
     /* Given a board and a coordinate,
      * determine if the amount of bad/good rupees
      * surrounding the coord is consistent with its
@@ -211,9 +136,7 @@ bool validaterupee(size_t width, size_t height, rupee board[height][width], int 
                 //make sure to not include
                 //center or points outside board
                 currentrupee = board[j][i];
-                if (//currentrupee == Bomb ||
-                    //currentrupee == Rupoor ||
-                    currentrupee == Bad) {
+                if (currentrupee == Bad) {
                     numbad++;
                 } else if (currentrupee == Unknown) {
                     numunknown++;
@@ -224,13 +147,8 @@ bool validaterupee(size_t width, size_t height, rupee board[height][width], int 
     }
     rupee center = board[y][x];
 
-    //int numbad = getnumbadrupees(adjacent, numadjacent);
-    //int numunknown = getnumunknownrupees(adjacent, numadjacent);
-    //int numgood = numadjacent - numbad - numunknown;
-
-    //default values for "bad" or unknown rupees
-    int minbad = 0;
-    int maxbad = 8;
+    int minbad;
+    int maxbad;
     switch(center) {
         case Green:
             minbad = 0;
@@ -253,6 +171,9 @@ bool validaterupee(size_t width, size_t height, rupee board[height][width], int 
             maxbad = 8;
             break;
         default:
+            //for "bad" or unknown rupees
+            minbad = 0;
+            maxbad = 8;
             break;
     }
 
@@ -286,35 +207,6 @@ bool validateneighbors(size_t width, size_t height, rupee board[height][width], 
     return valid;
 }
 
-int getnumbadrupees(rupee adjacent[MAXNUMADJACENTRUPEES], int numadjacent) {
-    /* Given an array of rupees, get the total number of
-     * bombs, rupoors, or bad rupees.
-     */
-    int numbad = 0;
-    for (int i = 0; i < numadjacent; i++) {
-        rupee currentrupee = adjacent[i];
-        if (//currentrupee == Bomb ||
-            //currentrupee == Rupoor ||
-            currentrupee == Bad) {
-            numbad++;
-        }
-    }
-    return numbad;
-}
-
-int getnumunknownrupees(rupee adjacent[MAXNUMADJACENTRUPEES], int numadjacent) {
-    /* Given an array of rupees, get the total number of
-     * unknown rupees.
-     */
-    int numunknown = 0;
-    for (int i = 0; i < numadjacent; i++) {
-        if (adjacent[i] == Unknown) {
-            numunknown++;
-        }
-    }
-    return numunknown;
-}
-
 void getbadnumbers(size_t width,
                    size_t height,
                    rupee board[height][width],
@@ -345,8 +237,7 @@ void getbadnumbers(size_t width,
                 if (currentrupee == Bad) outputnumbers[j][i]++;
             }
         }
-    } else if (minbadlocation == width * height) { //TODO maybe get rid of this and require minbadlocation be on the board
-        //do nothing
+    } else if (minbadlocation == width * height) {
     } else {
         if (minbadlocation == 0) {
             minbadlocation = width * height;
@@ -563,10 +454,6 @@ void zeromatrix(size_t width, size_t height, long matrix[height][width]) {
     }
 }
 
-int add_ints(int int1, int int2) {
-    return int1 + int2;
-}
-
 int main() {
     size_t width = 6;
     size_t height = 5;
@@ -580,24 +467,6 @@ int main() {
     allunknowns[2][2] = Red;
     //allunknowns[2][2] = Blue;
     //allunknowns[5][5] = Red;
-    struct coordinate topleft;
-    struct coordinate bottomright;
-    getknownbox(width, height, allunknowns, &topleft, &bottomright);
-    printf("%d", topleft.x);
-    printf("%d", topleft.y);
-    printf("%d", bottomright.x);
-    printf("%d\n", bottomright.y);
-    /*for (int i = 0; i < width; i++) {
-        for (int j = 0; j < height; j++) {
-            if (i <= bottomright.x && i >= topleft.x &&
-                j <= bottomright.y && j >= topleft.y) {
-                printf("X");
-            } else {
-                printf("O");
-            }
-        }
-        printf("\n");
-    }*/
     int numbad = 0;
     int maxnumbad = 8;
     int minbadlocation = 0;
