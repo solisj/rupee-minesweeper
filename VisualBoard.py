@@ -325,7 +325,7 @@ if __name__ == "__main__":
     while carry_on:
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONUP:
-                position = pygame.mouse.get_pos() #TODO do something with rupee at this spot?
+                position = pygame.mouse.get_pos()
                 #update selector on click
                 color = get_rupee_color(selector)
                 selector_rect = pygame.Rect(selector_left_edge,
@@ -448,7 +448,7 @@ if __name__ == "__main__":
                     text = "Updating..."
                     textsurface = FancyText.render(text, myfont, BLACK)
                     screen.blit(textsurface, (left_edge, top_edge))
-                    pygame.display.flip() #TODO sketchy
+                    pygame.display.flip()
                     #reset output matrix
                     row = (ctypes.c_long * width)(*[0 for i in range(width)])
                     output = ((ctypes.c_long * width) * height)(*[row for j in range(height)])
@@ -461,7 +461,7 @@ if __name__ == "__main__":
                                            num_bad,
                                            max_num_bad,
                                            min_bad_location,
-                                           output) #TODO uh change this name idk
+                                           output)
                     print("it took " + str(time.time() - start_time) + " seconds to calculate bad_numbers")
                     bad_probabilities = get_bad_probabilities(output, max_num_bad)
                     lowest_chances = get_lowest_chances(output, board)
@@ -488,25 +488,10 @@ if __name__ == "__main__":
             if event.type == pygame.QUIT: #user clicks 'quit'
                 carry_on = False
 
-        #game logic
-
-        #TODO LOL
-
-        pass
-
         #draw screen
         #clear screen
         screen.fill(WHITE)
         #draw stuff
-
-        #textsurface = myfont.render("Player 1 HP: " + str(player_1.get_hp()),
-        #                            False,
-        #                            (0, 0, 0))
-        #screen.blit(textsurface, (SCREEN_WIDTH*1/2, SCREEN_HEIGHT*3/4))
-        #pygame.draw.rect(screen, GREEN, [SCREEN_WIDTH*1/2,
-        #                                 SCREEN_HEIGHT*7/8 ,
-        #                                 player_1.get_hp()/10*SCREEN_WIDTH*1/2,
-        #                                 SCREEN_HEIGHT*1/16])
 
         #draw selector
         color = get_rupee_color(selector)
@@ -710,10 +695,10 @@ if __name__ == "__main__":
         textsurface = FancyText.render(text, myfont, BLACK)
         screen.blit(textsurface, (left_edge, top_edge))
 
-        #draw the squares***
+        #draw the squares
         for i in range(width):
             for j in range(height):
-                #TODO draw square (with possible meta-info?)
+                #draw square
                 left_edge = board_left_edge + \
                             i/width*(board_right_edge-board_left_edge)
                 top_edge = board_top_edge + \

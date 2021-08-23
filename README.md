@@ -43,7 +43,11 @@ The game ends after either the time runs out, or Link digs up a bomb.
 
 # Version History
 
-This is version 0.0.4.
+This is version 0.0.5.
+
+Finished all TODOs in front-end (VisualBoard.py).
+
+Version 0.0.4.
 
 More refactoring/removing unused code.
 
